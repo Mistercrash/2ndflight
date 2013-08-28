@@ -1,0 +1,4 @@
+name = 2ndflgiht Active Members
+description = Add action to Rules for calculating the active members of a dropzone
+core = 7.x
+dependencies[] = rules

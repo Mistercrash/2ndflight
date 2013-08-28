@@ -1,0 +1,57 @@
+<?php
+  /**
+  * @file
+  * http://drupal.org/node/1600272
+  */
+  function active_members_rules_action_info() {
+    $defaults = array(
+     'parameter' => array(
+        'list' => array(
+          'type' => 'list',
+          'label' => t('List'),
+          'save' => TRUE,
+        ),
+    		'price' => array(
+          'type' => 'commerce_price',
+          'label' => t('Price'),
+          'save' => TRUE,
+        ),
+      ),
+      'group' => t('Math'),
+    );
+    $actions['count_active_members'] = $defaults + array(
+      'label' => t('Count active members'),
+      'base' => 'count_active_members_action',
+      'provides' => array(
+        'list_count' => array(
+          'type' => 'integer',
+          'label' => t('List item count'),
+        ),
+      ),
+    );
+    return $actions;
+  }
+
+  function count_active_members_action($dropzone_members, $price) {
+    $one_year_ago = date('U', strtotime('-1 year', date('U')));
+    $count = 0;
+    // If user has posted a classified in the last year
+    foreach($dropzone_members as $dropzone_member) {
+      $last_classified = field_get_items('user', $dropzone_member, 'field_last_classified');
+      $last_classified_date = reset($last_classified);
+      if($last_classified_date['value'] > $one_year_ago) {
+        $count++;
+      }
+    }
+    // If active members count is greater than the price
+    if ($count > $price['amount'] / 100) {
+      $price = $count * 100;
+    }
+    else {
+      $price = $price['amount'];
+    }
+
+    return array('list_count' => $price);
+  }
+
+

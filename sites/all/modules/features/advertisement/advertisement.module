@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Advertisement advertisement feature.
+ */
+
+include_once 'advertisement.features.inc';

@@ -1,0 +1,14 @@
+# Ignore configuration files that may contain sensitive information.
+sites/*/settings*.php
+
+# Ignore paths that contain user-generated content.
+sites/*/files
+sites/*/private
+
+# Ignore git repositories from my custom modules
+sites/*/modules/custom/*/.git
+
+# Ignore my editor settings files
+.project
+
+
